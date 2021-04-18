@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+.pic {
+text-align: center;
+}
+</style>
+<h1 align="center">{{ name }} {{ surname }}</h1> 
+<h2 align="center">{{ city }}</h2> 
+<p class="pic"><img src={{ path }}></p>
+{% endblock %}

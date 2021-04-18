@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="text">
+<h1>Журнал работ</h1>
+</div>
+<style>
+   .text {
+    text-align:  center;
+   }
+</style>
+{% if current_user.is_authenticated %}
+    <a href="jobs" class="btn btn-secondary">Добавить работу</a>
+    <a href="departments" class="btn btn-secondary">Список отделов</a>
+{% endif %}
+{% if current_user.is_authenticated %}
+            <a class="navbar-brand" href="/logout">{{ current_user.name }}</a>
+        {% else %}
+            <p>
+                <a class="btn btn-primary " href="/register">Зарегистрироваться</a>
+                <a class="btn btn-success" href="/login">Войти</a>
+            </p>
+{% endif %}
+{% for item, item_user, cat in data %}
+<div class="col-md6 border rounded">
+    <h2>Действие # {{item.id}}</h2>
+    <table>
+      <colgroup>
+        <col span="5" style="background:yellow">
+        <col style="background-color:LightCyan">
+      </colgroup>
+      <tr>
+        <th>Название работы</th>
+        <th>Фамилия и имя ответственного</th>
+         <th>Продолжительность в часах</th>
+         <th>Список id команды</th>
+         <th>Категория работы</th>
+         <th>Завершена или нет</th>
+      </tr>
+      <tr>
+        <td>{{ item.job }}</td>
+        <td>{{ item_user.surname }} {{ item_user.name }}</td><td>{{ item.work_size }}</td><td>{{ item.collaborators }}</td><td>{{ cat.name }}</td><td>{{ item.is_finished }}</td>
+      </tr>
+    </table>
+    {% if current_user.id != 1 %}
+        {% if current_user.is_authenticated and current_user == item.user %}
+        <div>
+            <a href="/jobs/{{ item.id }}" class="btn btn-warning">
+                Изменить
+            </a>
+            <a href="/jobs_delete/{{ item.id }}" class="btn btn-danger">
+                Удалить
+            </a>
+        </div>
+        {% endif %}
+    {% endif %} 
+    {% if current_user.id == 1 %}
+        <div>
+            <a href="/jobs/{{ item.id }}" class="btn btn-warning">
+                Изменить
+            </a>
+            <a href="/jobs_delete/{{ item.id }}" class="btn btn-danger">
+                Удалить
+            </a>
+        </div>
+   {% endif %} 
+</div>
+{% endfor %}
+{% endblock %}

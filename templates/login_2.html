@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% set person = news["info"][ range(0, len_list) | random ] %}
+<h1>{{ person["name"] }} {{ person["surname"] }}</h1>
+{% set url_path = "static/img_2/" + person["photo"] %}
+<img src={{ "static/img/map.png" }}>
+{% set specialty = ", ".join(person["specialty"]) %}
+<h4>{{ specialty }}</h4>
+{% endblock %}

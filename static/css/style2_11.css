@@ -1,0 +1,24 @@
+val {
+     margin: 20px;
+     color: green;
+}
+
+g {
+ float: left;
+ margin: 5px 10px 5px 15;
+}
+
+p {
+  margin: 20px 0px 0px 0px;
+}
+table {
+   border: 1px solid white;
+}
+/* границы ячеек первого ряда таблицы */
+th {
+   border: 1px solid grey;
+}
+/* границы ячеек тела таблицы */
+td {
+   border: 1px solid grey;
+}

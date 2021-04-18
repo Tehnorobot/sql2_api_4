@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="text">
+<h1>Список отделов</h1>
+</div>
+<style>
+   .text {
+    text-align:  center;
+   }
+</style>
+<a href="/" class="btn btn-secondary">Назад</a>
+{% if current_user.is_authenticated %}
+    <a href="/departments/add_department" class="btn btn-secondary">Добавить отдел</a>
+{% endif %}
+{% if current_user.is_authenticated %}
+            <a class="navbar-brand" href="/logout">{{ current_user.name }}</a>
+        {% else %}
+            <p>
+                <a class="btn btn-primary " href="/register">Зарегистрироваться</a>
+                <a class="btn btn-success" href="/login">Войти</a>
+            </p>
+{% endif %}
+{% for item in data %}
+<div class="col-md6 border rounded">
+    <h2>Действие # {{item.id}}</h2>
+    <table>
+      <colgroup>
+        <col span="4" style="background:yellow">
+        <col style="background-color:LightCyan">
+      </colgroup>
+      <tr>
+        <th>Название отдела</th>
+        <th>Фамилия и Имя руководителя</th>
+         <th>id участников</th>
+         <th>email отдела</th>
+      </tr>
+      <tr>
+        <td>{{ item.title }}</td>
+        <td>{{ item.chief }}</td><td>{{ item.members }}</td><td>{{ item.email }}</td>>
+      </tr>
+    </table>
+    {% if current_user.id != 1 %}
+        {% if current_user.is_authenticated and current_user == item.user %}
+        <div>
+            <a href="/departments/edit_department/{{ item.id }}" class="btn btn-warning">
+                Изменить отдел
+            </a>
+            <a href="/departments/delete_department/{{ item.id }}" class="btn btn-danger">
+                Удалить отдел
+            </a>
+        </div>
+        {% endif %}
+    {% endif %} 
+    {% if current_user.id == 1 %}
+        <div>
+            <a href="/departments/edit_department/{{ item.id }}" class="btn btn-warning">
+                Изменить отдел
+            </a>
+            <a href="/departments/delete_department/{{ item.id }}" class="btn btn-danger">
+                Удалить отдел
+            </a>
+        </div>
+   {% endif %} 
+</div>
+{% endfor %}
+{% endblock %}
